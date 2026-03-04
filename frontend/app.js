@@ -1,5 +1,5 @@
-
-const API = "http://127.0.0.1:8081";
+// Use current domain (works on localhost AND production)
+const API = window.location.origin;
 
 // ── DOM refs ──────────────────────────────────────────────────────
 const input = document.getElementById("query-input");
@@ -232,7 +232,6 @@ async function runAsk() {
 // Event wiring ──────────────────────────────────────────────────
 btnSearch.addEventListener("click", runSearch);
 btnAsk.addEventListener("click", runAsk);
-
 
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
