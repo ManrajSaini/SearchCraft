@@ -1,0 +1,5 @@
+SQL stands for Structured Query Language and is used to manage relational databases.
+Core operations are SELECT, INSERT, UPDATE, and DELETE. Joins combine rows from two or more
+tables based on a related column. Indexes speed up query performance by allowing the database
+engine to find rows without scanning the entire table. Popular relational databases include
+PostgreSQL, MySQL, and SQLite. Python connects to databases via libraries like psycopg2 and sqlite3.

@@ -1,0 +1,5 @@
+Version control systems track changes to code over time. Git is the most widely used distributed
+version control system. Key concepts include repositories, commits, branches, merges, and pull requests.
+A branch lets you work on a feature in isolation without affecting the main codebase.
+Merging integrates changes from one branch into another. GitHub, GitLab, and Bitbucket are
+popular hosting platforms that add collaboration features on top of Git.

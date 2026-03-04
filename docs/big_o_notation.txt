@@ -1,0 +1,5 @@
+Big O notation describes the upper bound on the time or space an algorithm requires as the
+input size grows. O(1) is constant time — independent of input size. O(log n) is logarithmic,
+typical of binary search. O(n) is linear — scanning an array once. O(n log n) is common for
+efficient sorting algorithms. O(n^2) is quadratic, seen in naive nested loops. Understanding
+complexity helps engineers choose the right algorithm and data structure for the problem at hand.

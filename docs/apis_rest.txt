@@ -1,0 +1,5 @@
+An API (Application Programming Interface) defines how software components communicate.
+REST (Representational State Transfer) is an architectural style using HTTP methods like
+GET, POST, PUT, and DELETE to interact with resources. APIs return data typically in JSON format.
+Authentication is handled via API keys, OAuth tokens, or JWT. Python's requests library makes
+it simple to call external APIs, while FastAPI and Flask are used to build your own.

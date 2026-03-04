@@ -1,0 +1,4 @@
+A graph is a collection of nodes (vertices) connected by edges. Graphs can be directed or undirected,
+weighted or unweighted. Common algorithms include depth-first search (DFS), breadth-first search (BFS),
+Dijkstra's shortest path algorithm, and Kruskal's minimum spanning tree. Graphs are used to model
+social networks, road maps, web page links, and dependency trees in software systems.

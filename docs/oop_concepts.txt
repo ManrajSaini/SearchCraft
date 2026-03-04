@@ -1,0 +1,6 @@
+Object-oriented programming (OOP) organises code around objects rather than functions.
+The four pillars are encapsulation, abstraction, inheritance, and polymorphism.
+Encapsulation bundles data and methods into a single unit called a class.
+Inheritance allows a class to derive properties and behaviour from a parent class.
+Polymorphism lets different object types be treated through a common interface.
+Python supports OOP natively and everything in Python is an object.

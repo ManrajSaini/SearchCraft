@@ -1,0 +1,50 @@
+# ── Secrets ───────────────────────────────────────────────────────
+.env
+
+# ── Generated / cached data ───────────────────────────────────────
+data/index_cache.json
+
+# ── Runtime log files ─────────────────────────────────────────────
+uvicorn.log
+uvicorn.err
+*.log
+*.err
+
+# ── Python ────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+
+# ── Virtual environments ──────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Build / distribution ──────────────────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+
+# ── Testing & coverage ────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Type checkers / linters ───────────────────────────────────────
+.mypy_cache/
+.ruff_cache/
+
+# ── IDEs ──────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── OS ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db

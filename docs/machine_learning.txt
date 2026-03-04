@@ -1,0 +1,6 @@
+Machine learning is a subset of artificial intelligence that gives systems the ability to
+automatically learn and improve from experience without being explicitly programmed.
+It focuses on developing algorithms that can access data and learn from it to make predictions
+or decisions. Common techniques include supervised learning, unsupervised learning, and
+reinforcement learning. Popular libraries for machine learning in Python include scikit-learn,
+TensorFlow, and PyTorch.

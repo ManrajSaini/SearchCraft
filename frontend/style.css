@@ -1,0 +1,697 @@
+/* ═══════════════════════════════════════════════════════════════════
+   SearchCraft — dark theme
+   Palette:
+     bg-base    #0f0f0f   page background
+     bg-surface #1a1a1a   cards / sidebar
+     bg-raised  #242424   inputs / hover states
+     border     #2e2e2e   subtle dividers
+     accent     #4f8ef7   primary blue
+     accent-dim #1e3a6e   accent tinted bg
+     text-hi    #f0f0f0   headings / primary text
+     text-mid   #a0a0a0   secondary / hints
+     text-lo    #606060   placeholders
+     yellow     #f5c842   spell-correction banner
+     green      #3ecf6e   result score badge
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Reset & box-sizing ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ──────────────────────────────────────────────────────── */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #0f0f0f;
+  color: #f0f0f0;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── Layout: three columns ──────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 20% 45% 35%;
+  min-height: 100vh;
+}
+
+/* ── Sidebar (shared base) ──────────────────────────────── */
+.sidebar {
+  background: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 24px 14px;
+}
+
+.sidebar--left {
+  border-right: 1px solid #2e2e2e;
+}
+.sidebar--right {
+  border-left: 1px solid #2e2e2e;
+}
+
+.sidebar-section {
+  padding-bottom: 20px;
+}
+
+.sidebar-heading {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* ── Document list ──────────────────────────────────────────────  */
+
+/* ── Document chips ─────────────────────────────────────────────  */
+.doc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.doc-item {
+  border-radius: 6px;
+  border: 1px solid #2e2e2e;
+  background: #242424;
+  color: #d0d0d0;
+  font-size: 16px;
+  overflow: hidden;
+}
+
+.doc-item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.doc-item-header:hover {
+  background: #2e2e2e;
+}
+
+.doc-chevron {
+  font-size: 9px;
+  color: #606060;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.doc-item.open .doc-chevron {
+  transform: rotate(90deg);
+}
+
+.doc-item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-item-body {
+  display: none;
+  padding: 8px 10px 10px 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #a0a0a0;
+  border-top: 1px solid #2e2e2e;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.doc-item.open .doc-item-body {
+  display: block;
+}
+
+.doc-item-loading {
+  color: #606060;
+  font-style: italic;
+}
+
+.doc-placeholder {
+  color: #606060;
+  cursor: default;
+  border-color: transparent;
+  background: transparent;
+}
+
+/* ── Flowchart (right sidebar) ──────────────────────────────────  */
+.flowchart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Base node ──────────────────────────────────────────────────  */
+.fc-node {
+  border-radius: 6px;
+  border: 1px solid #2e2e2e;
+  background: #1f1f1f;
+  padding: 10px 15px;
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+.fc-label {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.fc-detail {
+  color: #888;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.fc-out {
+  font-size: 10px;
+  font-family: "Consolas", "Menlo", monospace;
+  color: #b0b0b0;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.fc-warn {
+  font-size: 10px;
+  color: #f5c842;
+  margin-top: 4px;
+}
+
+/* ── Color-coded node variants ───────────────────────────────────  */
+
+/* Input — neutral */
+.fc-input {
+  border-color: #505050;
+}
+.fc-input .fc-label {
+  color: #d0d0d0;
+}
+
+/* Tokenizer — blue */
+.fc-tokenizer {
+  border-color: #4f8ef7;
+  background: #0e1e3a;
+}
+.fc-tokenizer .fc-label {
+  color: #4f8ef7;
+}
+
+/* Bloom Filter — amber */
+.fc-bloom {
+  border-color: #f5a623;
+  background: #2a1c00;
+}
+.fc-bloom .fc-label {
+  color: #f5a623;
+}
+
+/* Unknown tokens — orange */
+.fc-unknown {
+  border-color: #e07c3e;
+  background: #25150a;
+}
+.fc-unknown .fc-label {
+  color: #e07c3e;
+}
+
+/* Known tokens — teal */
+.fc-known {
+  border-color: #4ecdc4;
+  background: #081c1b;
+}
+.fc-known .fc-label {
+  color: #4ecdc4;
+}
+
+/* Spell Corrector — purple */
+.fc-spell {
+  border-color: #a89cf7;
+  background: #15103a;
+}
+.fc-spell .fc-label {
+  color: #a89cf7;
+}
+
+/* Corrected Query — yellow */
+.fc-corrected {
+  border-color: #f5c842;
+  background: #2d2500;
+}
+.fc-corrected .fc-label {
+  color: #f5c842;
+}
+
+/* Inverted Index — cyan */
+.fc-index {
+  border-color: #40c4ff;
+  background: #021a28;
+}
+.fc-index .fc-label {
+  color: #40c4ff;
+}
+
+/* BM25 — green */
+.fc-bm25 {
+  border-color: #3ecf6e;
+  background: #041a0d;
+}
+.fc-bm25 .fc-label {
+  color: #3ecf6e;
+}
+
+/* Search Mode — blue */
+.fc-search-mode {
+  border-color: #4f8ef7;
+  background: #0e1e3a;
+}
+.fc-search-mode .fc-label {
+  color: #4f8ef7;
+}
+
+/* Ask AI Mode — purple */
+.fc-ask-mode {
+  border-color: #7c6af7;
+  background: #15103a;
+}
+.fc-ask-mode .fc-label {
+  color: #a89cf7;
+}
+
+/* Display Results — neutral highlight */
+.fc-display {
+  border-color: #505050;
+  background: #242424;
+}
+.fc-display .fc-label {
+  color: #e0e0e0;
+}
+
+/* ── Vertical connector (straight sections) ─────────────────────  */
+.fc-down {
+  position: relative;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+}
+.fc-down::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 4px;
+  left: 50%;
+  width: 1px;
+  background: #a3a1a1;
+  transform: translateX(-50%);
+}
+.fc-down::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: 5px solid #a3a1a1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+}
+
+/* ── Fork / merge structure ─────────────────────────────────────  */
+.fc-fork {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top bar: horizontal at bottom so branch-lines connect flush */
+.fc-fork-bar--top {
+  position: relative;
+  height: 10px;
+}
+.fc-fork-bar--top::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 22%;
+  right: 22%;
+  height: 1px;
+  background: #a3a1a1;
+}
+
+/* Two side-by-side branches */
+.fc-fork-branches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  align-items: start;
+}
+
+.fc-branch {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Short vertical connector inside a branch */
+.fc-branch-line {
+  position: relative;
+  height: 12px;
+}
+.fc-branch-line::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: #a3a1a1;
+  transform: translateX(-50%);
+}
+
+/* Spacer so known-tokens branch aligns with spell corrector side */
+.fc-branch-spacer {
+  flex: 1;
+  min-height: 12px;
+}
+
+/* Bottom bar: horizontal at top so branch-lines connect flush */
+.fc-fork-bar--bottom {
+  position: relative;
+  height: 10px;
+}
+.fc-fork-bar--bottom::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 22%;
+  right: 22%;
+  height: 1px;
+  background: #a3a1a1;
+}
+
+/* ── Main panel ─────────────────────────────────────────────────  */
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 40px;
+  gap: 24px;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* ── App header ─────────────────────────────────────────────────  */
+.app-header {
+  padding-bottom: 4px;
+}
+
+.app-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: -0.02em;
+}
+
+.app-title span {
+  color: #4f8ef7;
+}
+
+.app-subtitle {
+  font-size: 13px;
+  color: #a0a0a0;
+  margin-top: 4px;
+}
+
+/* ── Search bar ─────────────────────────────────────────────────  */
+.search-section {
+  width: 100%;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.query-input {
+  flex: 1;
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  color: #f0f0f0;
+  font-size: 14px;
+  padding: 10px 16px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.query-input::placeholder {
+  color: #606060;
+}
+
+.query-input:focus {
+  border-color: #4f8ef7;
+}
+
+.search-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────  */
+.btn {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-search {
+  background: #4f8ef7;
+  color: #fff;
+}
+
+.btn-search:hover:not(:disabled) {
+  background: #6aa3ff;
+}
+
+.btn-ask {
+  background: #242424;
+  color: #a89cf7;
+  border: 1px solid #7c6af7;
+}
+
+.btn-ask:hover:not(:disabled) {
+  background: #2a2040;
+}
+
+/* ── Spell correction banner ───────────────────────────────────── */
+.correction-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2d2500;
+  border: 1px solid #f5c842;
+  border-radius: 8px;
+  color: #f5c842;
+  font-size: 13px;
+  padding: 10px 16px;
+}
+
+.correction-banner[hidden] {
+  display: none;
+}
+
+.correction-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* ── Results section ────────────────────────────────────────────  */
+.results-section {
+  flex: 1;
+}
+
+.results-placeholder {
+  color: #606060;
+  font-size: 16px;
+  padding: 20px 0;
+}
+
+/* ── Search result cards ────────────────────────────────────────  */
+.result-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+}
+
+.result-list[hidden] {
+  display: none;
+}
+
+.result-card {
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  transition: border-color 0.12s;
+}
+
+.result-card:hover {
+  border-color: #4f8ef7;
+}
+
+.result-rank {
+  font-size: 11px;
+  font-weight: 700;
+  color: #606060;
+  min-width: 24px;
+  text-align: right;
+}
+
+.result-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0f0f0;
+  letter-spacing: 0.01em;
+}
+
+/* replace underscores with spaces visually via CSS */
+.result-name {
+  text-transform: capitalize;
+}
+
+.result-score {
+  background: #0d2b1a;
+  border: 1px solid #3ecf6e;
+  border-radius: 5px;
+  color: #3ecf6e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+/* ── Ask AI result ──────────────────────────────────────────────  */
+.ask-result[hidden] {
+  display: none;
+}
+
+.ask-result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ask-answer {
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-left: 3px solid #7c6af7;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 14px;
+  line-height: 1.75;
+  padding: 20px 22px;
+  white-space: pre-wrap;
+}
+
+.ask-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sources-heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+}
+
+.source-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.source-card {
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+}
+
+.source-rank {
+  font-size: 11px;
+  color: #606060;
+  min-width: 18px;
+}
+
+.source-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #d0d0d0;
+}
+
+.source-score {
+  font-size: 11px;
+  color: #a0a0a0;
+}
+
+/* ── Scrollbar (webkit) ─────────────────────────────────────────  */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2e2e2e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}

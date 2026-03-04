@@ -1,0 +1,18 @@
+# SearchCraft dependencies
+# Install with: pip install -r requirements.txt
+
+# FastAPI backend + ASGI server
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+
+# LLM integration (Groq free-tier via LangChain)
+langchain-groq>=0.1.0
+
+# LangChain core message types (HumanMessage / SystemMessage)
+langchain-core>=0.1.0
+
+# Load GROQ_API_KEY from .env
+python-dotenv>=1.0.0
+
+# HTTP client used by langchain-groq for timeouts
+httpx>=0.25.0

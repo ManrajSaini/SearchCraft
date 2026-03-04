@@ -1,0 +1,5 @@
+A hash table is a data structure that maps keys to values using a hash function.
+When a key is inserted, the hash function computes an index into an array of buckets.
+Hash tables provide average O(1) time complexity for lookups, insertions, and deletions.
+Collisions occur when two keys hash to the same index and are handled via chaining or
+open addressing. Python's built-in dict is implemented as a hash table.

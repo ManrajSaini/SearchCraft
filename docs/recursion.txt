@@ -1,0 +1,5 @@
+Recursion is a technique where a function calls itself to solve a smaller version of the same problem.
+Every recursive function needs a base case that stops the recursion and a recursive case that
+reduces the problem. Classic examples include computing factorials, Fibonacci numbers, and
+traversing tree structures. Recursion can be elegant but may cause stack overflows for very deep
+calls. Iterative solutions or tail-call optimisation are alternatives for performance-critical code.

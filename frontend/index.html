@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SearchCraft</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <!-- ── LEFT SIDEBAR — Documents ──────────────────────────────── -->
+      <aside class="sidebar sidebar--left">
+        <section class="sidebar-section" id="docs-section">
+          <h2 class="sidebar-heading">Documents</h2>
+          <ul class="doc-list" id="doc-list">
+            <li class="doc-item doc-placeholder">Loading…</li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- ── MAIN PANEL ─────────────────────────────────────────────── -->
+      <main class="main-panel">
+        <header class="app-header">
+          <h1 class="app-title">SearchCraft</h1>
+          <p class="app-subtitle">
+            BM25 search engine with AI synthesis — built from scratch
+          </p>
+        </header>
+
+        <section class="search-section">
+          <div class="search-bar">
+            <input
+              type="text"
+              id="query-input"
+              class="query-input"
+              placeholder="Type a query and press Search or Ask AI…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <div class="search-buttons">
+              <button id="btn-search" class="btn btn-search">Search</button>
+              <button id="btn-ask" class="btn btn-ask">Ask AI</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="correction-banner" id="correction-banner" hidden>
+          <span class="correction-icon">✦</span>
+          <span id="correction-text"></span>
+        </div>
+
+        <section class="results-section" id="results-section">
+          <div class="results-placeholder" id="results-placeholder">
+            Enter a query above to see results.
+          </div>
+          <ol class="result-list" id="result-list" hidden></ol>
+          <div class="ask-result" id="ask-result" hidden>
+            <div class="ask-answer" id="ask-answer"></div>
+            <div class="ask-sources" id="ask-sources">
+              <h3 class="sources-heading">Sources</h3>
+              <ol class="source-list" id="source-list"></ol>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ── RIGHT SIDEBAR — How It Works ──────────────────────────── -->
+      <aside class="sidebar sidebar--right">
+        <section class="sidebar-section">
+          <h2 class="sidebar-heading">How It Works</h2>
+
+          <div class="flowchart">
+            <!-- 1. User Query -->
+            <div class="fc-node fc-input">
+              <div class="fc-label">User Query</div>
+              <div class="fc-detail">"pythn tutorial"</div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- 2. Tokenizer -->
+            <div class="fc-node fc-tokenizer">
+              <div class="fc-label">Tokenizer</div>
+              <div class="fc-detail">
+                lowercase · strip punctuation<br />remove stopwords · stem
+              </div>
+              <div class="fc-out">→ ["pythn", "tutorial"]</div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- 3. Bloom Filter -->
+            <div class="fc-node fc-bloom">
+              <div class="fc-label">Bloom Filter</div>
+              <div class="fc-detail">check bit array per token</div>
+              <div class="fc-out">
+                "pythn" → ✗ NOT IN VOCAB<br />"tutorial" → ✓ IN VOCAB
+              </div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- Fork 1: Unknown / Known -->
+            <div class="fc-fork">
+              <div class="fc-fork-bar fc-fork-bar--top"></div>
+              <div class="fc-fork-branches">
+                <div class="fc-branch">
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-node fc-unknown">
+                    <div class="fc-label">Unknown Tokens</div>
+                    <div class="fc-detail">"pythn"</div>
+                  </div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-node fc-spell">
+                    <div class="fc-label">Spell Corrector</div>
+                    <div class="fc-detail">
+                      Levenshtein distance + frequency
+                    </div>
+                    <div class="fc-out">
+                      pythn → python (1 edit)
+                    </div>
+                  </div>
+                  <div class="fc-branch-line"></div>
+                </div>
+
+                <div class="fc-branch">
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-node fc-known">
+                    <div class="fc-label">Known Tokens</div>
+                    <div class="fc-detail">
+                      "tutorial" already in vocab<br />skip correction<br />pass through
+                    </div>
+                  </div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-branch-line"></div>
+                </div>
+              </div>
+              <div class="fc-fork-bar fc-fork-bar--bottom"></div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- 4. Corrected Query -->
+            <div class="fc-node fc-corrected">
+              <div class="fc-label">Corrected Query</div>
+              <div class="fc-out">"python tutorial"</div>
+              <div class="fc-warn">⚠ Did you mean?</div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- 5. Inverted Index -->
+            <div class="fc-node fc-index">
+              <div class="fc-label">Inverted Index</div>
+              <div class="fc-detail">
+                "python" → doc1, doc3, doc7…<br />"tutorial" → doc3, doc5…
+              </div>
+              <div class="fc-out">union: {1, 3, 5, 7, 12}</div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- 6. BM25 Scoring -->
+            <div class="fc-node fc-bm25">
+              <div class="fc-label">BM25 Scoring</div>
+              <div class="fc-detail">IDF × tf · saturation / length norm</div>
+              <div class="fc-out">doc3: 4.21 · doc12: 3.15 · doc5: 2.87</div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- Fork 2: Search Mode / Ask AI Mode -->
+            <div class="fc-fork">
+              <div class="fc-fork-bar fc-fork-bar--top"></div>
+              <div class="fc-fork-branches">
+                <div class="fc-branch">
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-node fc-search-mode">
+                    <div class="fc-label">SEARCH MODE</div>
+                    <div class="fc-detail">ranked results<br />with scores</div>
+                  </div>
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-branch-line"></div>
+                </div>
+
+                <div class="fc-branch">
+                  <div class="fc-branch-line"></div>
+                  <div class="fc-node fc-ask-mode">
+                    <div class="fc-label">ASK AI MODE</div>
+                    <div class="fc-detail">
+                      top-5 docs → prompt<br />→ LLM (1 API call)<br />→ AI
+                      answer + sources
+                    </div>
+                  </div>
+                  <div class="fc-branch-line"></div>
+                </div>
+              </div>
+              <div class="fc-fork-bar fc-fork-bar--bottom"></div>
+            </div>
+            <div class="fc-down"></div>
+
+            <!-- 7. Display Results -->
+            <div class="fc-node fc-display">
+              <div class="fc-label">Display Results</div>
+              <div class="fc-detail">Ranked cards or AI answer</div>
+            </div>
+          </div>
+          <!-- /flowchart -->
+        </section>
+      </aside>
+    </div>
+    <!-- /layout -->
+
+    <script src="app.js"></script>
+  </body>
+</html>

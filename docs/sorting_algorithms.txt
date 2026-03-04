@@ -1,0 +1,5 @@
+Sorting algorithms arrange elements of a list in a particular order. Common algorithms include:
+Bubble sort repeatedly swaps adjacent elements that are in the wrong order — O(n^2) worst case.
+Merge sort uses divide and conquer to split arrays and merge them in sorted order — O(n log n).
+Quick sort selects a pivot element and partitions the array around it — O(n log n) average.
+Tim sort, used in Python's built-in sort, combines merge sort and insertion sort for real-world data.

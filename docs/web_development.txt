@@ -1,0 +1,5 @@
+Web development involves building and maintaining websites and web applications.
+The front end deals with everything users interact with directly — HTML, CSS, and JavaScript.
+The back end handles server logic, databases, and APIs. Python frameworks like Django and
+FastAPI are popular for building RESTful APIs and full-stack web applications. Modern web
+development often involves cloud deployment, containerization with Docker, and CI/CD pipelines.
