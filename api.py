@@ -1,6 +1,12 @@
 """
 SearchCraft — FastAPI backend
-Run with:  uvicorn api:app --reload --port 8081
+
+Development:
+    uvicorn api:app --reload --port 8081
+
+Production (automatic on hosting platforms):
+    Platforms like Render, Railway, Vercel auto-start with:
+    uvicorn api:app --host 0.0.0.0 --port $PORT
 """
 
 import logging
