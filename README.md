@@ -2,6 +2,8 @@
 
 A modern search engine built from scratch with BM25 ranking, spell correction, and retrieval-augmented generation (RAG) powered by LLMs.
 
+Read how i built this, on [Medium](https://medium.com/@manraj.saini123/i-built-a-search-engine-from-scratch-to-understand-how-google-actually-works-e6b03e9e1cfa)
+
 Open your browser to `http://127.0.0.1:8081/ui` after starting the server.
 
 ---
